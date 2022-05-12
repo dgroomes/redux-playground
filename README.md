@@ -33,5 +33,10 @@ Follow these instructions to run the tic-tac-toe program:
      ```
 2. Run the program:
    * ```shell
-     node tic-tac-toe.js 
+     node tic-tac-toe.mjs 
      ``` 
+
+## Reference
+
+* [Redux: Getting Started](https://redux.js.org/introduction/getting-started)
+* [nodejs.org: "How do I prompt users for input from a command-line script?"](https://nodejs.org/en/knowledge/command-line/how-to-prompt-for-command-line-input/)
