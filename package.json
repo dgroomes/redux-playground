@@ -1,0 +1,9 @@
+{
+  "name": "javascript-playground-redux",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "description": "Learning Redux with a tic-tac-toe example.",
+  "dependencies": {
+    "redux": "^4.2.0"
+  }
+}
