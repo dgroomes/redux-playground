@@ -27,11 +27,12 @@ TypeScript. I'll write a tic-tac-toe command-line program in JavaScript/Node.js.
 
 Follow these instructions to run the tic-tac-toe program:
 
-1. Install Redux:
+1. Use Node 18 or later
+2. Install Redux:
    * ```shell
      npm install
      ```
-2. Run the program:
+3. Run the program:
    * ```shell
      node tic-tac-toe.mjs 
      ``` 
