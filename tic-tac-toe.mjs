@@ -90,12 +90,12 @@ function acceptMove(move) {
     const point = pointsMap[move]
 
     if (point === undefined) {
-        rl.question(`The move '${move}' is not recognized. Try another one > `, acceptMove)
+        rl.question(`The move '${move}' is not recognized. Try another one.\nNext move > `, acceptMove)
         return
     }
 
     if (legalMoves[move] === undefined) {
-        rl.question(`The move '${move}' has already been made. Try another one > `, acceptMove)
+        rl.question(`The move '${move}' has already been made. Try another one.\nNext move > `, acceptMove)
         return
     }
 
@@ -112,7 +112,28 @@ function acceptMove(move) {
     }
 
     // TODO check for a draw
-    // TODO print the board
+
+    /**
+     * Render a row string.
+     *
+     * E.g. 'x - o', 'x x o', '- - -'
+     */
+    function renderRow(xPositions, oPositions) {
+        // Remember your JS order of operations: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+        let left = (xPositions & 0b100) ? 'x' : (oPositions & 0b100) ? 'o' : '-';
+        let middle = (xPositions & 0b010) ? 'x' : (oPositions & 0b010) ? 'o' : '-';
+        let right = (xPositions & 0b001) ? 'x' : (oPositions & 0b001) ? 'o' : '-';
+        return [left, middle, right].join(' ')
+    }
+
+    let boardRender = renderRow(state.player1Positions >> 6, state.player2Positions >> 6)
+    boardRender += "\n"
+    boardRender += renderRow(state.player1Positions >> 3, state.player2Positions >> 3)
+    boardRender += "\n"
+    boardRender += renderRow(state.player1Positions, state.player2Positions)
+    boardRender += "\n"
+
+    console.log(boardRender)
 
     rl.question("Next move > ", acceptMove)
 }
