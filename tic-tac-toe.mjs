@@ -27,22 +27,23 @@ Type your selection in two letters. The options are:
 `)
 
 const state = {
-    // Who is the active player. Rather, "Who's turn is it right now"?
-    player: 1,
+    // Who is the active team. Rather, "Who's turn is it right now? Team 'X' or team 'Y'?"
+    team: 1,
 
     // The board state is represented in two bitmaps. (Admittedly, this is kind of a strange implementation for tic-tac-toe,
-    // but I want to learn about bitwise operators).
+    // but I want to learn about bitwise operators, bit shifting and thinking about bits. A playground-style repo is the
+    // perfect place to learn and experiment).
     //
-    // Each bit in the 'player1Positions' bitmap models the state of the 'X' check at a point on the tic-tac-toe board.
+    // Each bit in the 'teamXPositions' bitmap models the state of the 'X' check at a point on the tic-tac-toe board.
     // If the bit is 1, then there is an 'X' there. The order of the bit places correspond to the order of the board
-    // boxes, row by row, starting with the top row and leftmost box. IN other words, there are nine bit places and
+    // boxes, row by row, starting with the top row and leftmost box. In other words, there are nine bit places and
     // there are nine boxes on the board.
     //
-    // The 'player2Positions' bitmap follows the same idea, but for 'O' checks.
+    // The 'teamOPositions' bitmap follows the same idea, but for 'O' checks.
     //
     // Learn about bitmaps here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR
-    player1Positions: 0b000000000,
-    player2Positions: 0b000000000
+    teamXPositions: 0b000000000,
+    teamOPositions: 0b000000000
 }
 
 const pointsMap = {
@@ -65,10 +66,10 @@ const rl = readline.createInterface({
 })
 
 /**
- * Check the player's positions ('X's or 'O's on the board) for a win condition.
+ * Check the team's positions ('X's or 'O's on the board) for a win condition.
  * Did the get three in a row horizontally, vertically or diagonally?
  *
- * @param positions the current player's board positions (as a bitmap)
+ * @param positions the current team's board positions (as a bitmap)
  */
 function checkWin(positions) {
     if (
@@ -80,14 +81,14 @@ function checkWin(positions) {
         positions === (positions | 0b001001001) ||
         positions === (positions | 0b100010001) ||
         positions === (positions | 0b001010100)) {
-        const team = state.player === 1 ? 'X' : 'O'
+        const team = state.team === 1 ? 'X' : 'O'
         console.log(`Team '${team}' wins! 🎉`)
         rl.close()
     }
 }
 
 function nextMovePrompt() {
-    const team = state.player === 1 ? 'X' : 'O'
+    const team = state.team === 1 ? 'X' : 'O'
     rl.question(`Place an '${team}' > `, acceptMove)
 }
 
@@ -109,13 +110,13 @@ function acceptMove(move) {
 
     delete legalMoves[move]
 
-    let nextPlayer
-    if (state.player === 1) {
-        state.player1Positions = state.player1Positions | point
-        nextPlayer = 2
+    let nextTeam
+    if (state.team === 1) {
+        state.teamXPositions = state.teamXPositions | point
+        nextTeam = 2
     } else {
-        state.player2Positions = state.player2Positions | point
-        nextPlayer = 1
+        state.teamOPositions = state.teamOPositions | point
+        nextTeam = 1
     }
 
     // TODO check for a draw
@@ -134,17 +135,17 @@ function acceptMove(move) {
     }
 
     let boardRender = `
-   ${renderRow(state.player1Positions >> 6, state.player2Positions >> 6)}    
-   ${renderRow(state.player1Positions >> 3, state.player2Positions >> 3)}    
-   ${renderRow(state.player1Positions, state.player2Positions)}    
+   ${renderRow(state.teamXPositions >> 6, state.teamOPositions >> 6)}    
+   ${renderRow(state.teamXPositions >> 3, state.teamOPositions >> 3)}    
+   ${renderRow(state.teamXPositions, state.teamOPositions)}    
 `
 
     console.log(boardRender)
 
-    checkWin(state.player1Positions)
-    checkWin(state.player2Positions)
+    checkWin(state.teamXPositions)
+    checkWin(state.teamOPositions)
 
-    state.player = nextPlayer
+    state.team = nextTeam
 
     nextMovePrompt()
 }
