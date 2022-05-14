@@ -44,7 +44,7 @@ const pointsMap = {
 // foundation to understand the flow of the program.
 const starterState = {
     // Who is the active team. Rather, "Who's turn is it right now? Team 'X' or team 'Y'?"
-    team: 1,
+    team: 'X',
 
     // The board state is represented in two bitmaps. (Admittedly, this is kind of a strange implementation for tic-tac-toe,
     // but I want to learn about bitwise operators, bit shifting and thinking about bits. A playground-style repo is the
@@ -113,12 +113,12 @@ function reduce(state = starterState, action) {
     delete state.legalMoves[move]
     const point = pointsMap[move]
 
-    if (state.team === 1) {
+    if (state.team === 'X') {
         state.teamXPositions = state.teamXPositions | point
-        state.team = 2
+        state.team = 'O'
     } else {
         state.teamOPositions = state.teamOPositions | point
-        state.team = 1
+        state.team = 'X'
     }
 
     // TODO check for a draw
@@ -151,7 +151,7 @@ function checkWin(positions, team) {
 }
 
 function nextMovePrompt() {
-    const team = store.getState().team === 1 ? 'X' : 'O'
+    const team = store.getState().team
     rl.question(`Place an '${team}' > `, acceptMove)
 }
 
