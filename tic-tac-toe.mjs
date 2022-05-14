@@ -2,7 +2,7 @@ import readline from "readline"
 
 console.log(`Let's play Tic-Tac-Toe!
 
-Player 1 goes first. Try to connect three Xs in a row!
+Team 'X' goes first. Try to connect three Xs in a row!
 
 
           Left    Middle    Right
@@ -80,9 +80,15 @@ function checkWin(positions) {
         positions === (positions | 0b001001001) ||
         positions === (positions | 0b100010001) ||
         positions === (positions | 0b001010100)) {
-        console.log(`Player ${state.player} wins! 🎉`)
+        const team = state.player === 1 ? 'X' : 'O'
+        console.log(`Team '${team}' wins! 🎉`)
         rl.close()
     }
+}
+
+function nextMovePrompt() {
+    const team = state.player === 1 ? 'X' : 'O'
+    rl.question(`Place an '${team}' > `, acceptMove)
 }
 
 function acceptMove(move) {
@@ -90,25 +96,26 @@ function acceptMove(move) {
     const point = pointsMap[move]
 
     if (point === undefined) {
-        rl.question(`The move '${move}' is not recognized. Try another one.\nNext move > `, acceptMove)
+        console.log(`The move '${move}' is not recognized. Try another one.`)
+        nextMovePrompt()
         return
     }
 
     if (legalMoves[move] === undefined) {
-        rl.question(`The move '${move}' has already been made. Try another one.\nNext move > `, acceptMove)
+        console.log(`The move '${move}' has already been made. Try another one.`)
+        nextMovePrompt()
         return
     }
 
     delete legalMoves[move]
 
+    let nextPlayer
     if (state.player === 1) {
         state.player1Positions = state.player1Positions | point
-        checkWin(state.player1Positions)
-        state.player = 2
+        nextPlayer = 2
     } else {
         state.player2Positions = state.player2Positions | point
-        checkWin(state.player2Positions)
-        state.player = 1
+        nextPlayer = 1
     }
 
     // TODO check for a draw
@@ -120,25 +127,29 @@ function acceptMove(move) {
      */
     function renderRow(xPositions, oPositions) {
         // Remember your JS order of operations: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
-        let left = (xPositions & 0b100) ? 'x' : (oPositions & 0b100) ? 'o' : '-';
-        let middle = (xPositions & 0b010) ? 'x' : (oPositions & 0b010) ? 'o' : '-';
-        let right = (xPositions & 0b001) ? 'x' : (oPositions & 0b001) ? 'o' : '-';
+        let left = (xPositions & 0b100) ? 'X' : (oPositions & 0b100) ? 'O' : '-'
+        let middle = (xPositions & 0b010) ? 'X' : (oPositions & 0b010) ? 'O' : '-'
+        let right = (xPositions & 0b001) ? 'X' : (oPositions & 0b001) ? 'O' : '-'
         return [left, middle, right].join(' ')
     }
 
-    let boardRender = renderRow(state.player1Positions >> 6, state.player2Positions >> 6)
-    boardRender += "\n"
-    boardRender += renderRow(state.player1Positions >> 3, state.player2Positions >> 3)
-    boardRender += "\n"
-    boardRender += renderRow(state.player1Positions, state.player2Positions)
-    boardRender += "\n"
+    let boardRender = `
+   ${renderRow(state.player1Positions >> 6, state.player2Positions >> 6)}    
+   ${renderRow(state.player1Positions >> 3, state.player2Positions >> 3)}    
+   ${renderRow(state.player1Positions, state.player2Positions)}    
+`
 
     console.log(boardRender)
 
-    rl.question("Next move > ", acceptMove)
+    checkWin(state.player1Positions)
+    checkWin(state.player2Positions)
+
+    state.player = nextPlayer
+
+    nextMovePrompt()
 }
 
-rl.question(`> `, acceptMove)
+nextMovePrompt()
 
 rl.on('close', function () {
     console.log('\nThat was fun!')
