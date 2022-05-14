@@ -121,8 +121,6 @@ function reduce(state = starterState, action) {
         state.team = 'X'
     }
 
-    // TODO check for a draw
-
     return state
 }
 
@@ -174,7 +172,7 @@ function acceptMove(move) {
     store.dispatch({type: "move", move})
 }
 
-store.subscribe(function renderBoard() {
+store.subscribe(function handlePostMove() {
 
     const state = store.getState()
 
@@ -200,6 +198,11 @@ store.subscribe(function renderBoard() {
 
     checkWin(state.teamXPositions, 'X')
     checkWin(state.teamOPositions, 'O')
+
+    if ((state.teamXPositions | state.teamOPositions) === 0b111111111) {
+        console.log("It's a draw!")
+        rl.close()
+    }
 
     nextMovePrompt()
 })
