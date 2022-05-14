@@ -1,4 +1,5 @@
 import readline from "readline"
+import {legacy_createStore as createStore} from "redux"
 
 console.log(`Let's play Tic-Tac-Toe!
 
@@ -26,7 +27,22 @@ Type your selection in two letters. The options are:
 * 'br' for the bottom row and right column
 `)
 
-const state = {
+const pointsMap = {
+    tl: 0b100000000,
+    tm: 0b010000000,
+    tr: 0b001000000,
+    ml: 0b000100000,
+    mm: 0b000010000,
+    mr: 0b000001000,
+    bl: 0b000000100,
+    bm: 0b000000010,
+    br: 0b000000001,
+}
+
+// This is the initial state of the program. We are using Redux as our state manager/framework. Study the fields here
+// and build your understanding of the state. When you have a complete mental model of the state, then you have a solid
+// foundation to understand the flow of the program.
+const starterState = {
     // Who is the active team. Rather, "Who's turn is it right now? Team 'X' or team 'Y'?"
     team: 1,
 
@@ -42,38 +58,86 @@ const state = {
     // The 'teamOPositions' bitmap follows the same idea, but for 'O' checks.
     //
     // Learn about bitmaps here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR
-    teamXPositions: 0b000000000,
-    teamOPositions: 0b000000000
+    teamXPositions: 0b000000000, teamOPositions: 0b000000000,
+
+    legalMoves: globalThis.structuredClone(pointsMap)
 }
 
-const pointsMap = {
-    tl: 0b100000000,
-    tm: 0b010000000,
-    tr: 0b001000000,
-    ml: 0b000100000,
-    mm: 0b000010000,
-    mr: 0b000001000,
-    bl: 0b000000100,
-    bm: 0b000000010,
-    br: 0b000000001,
+/**
+ * This is the Redux "reducer". I'm not really sure what to name it because it has multiple responsibilities. I can't
+ * name it after all of these responsibilities. I'll stick with a generic name like "reducer".
+ */
+function reduce(state = starterState, action) {
+    console.log("Hello from the reducer!")
+    if (action.type !== "move") {
+        // This is a bit awkward in my opinion. The Redux user (the programmer) will encounter an "INIT" event from the
+        // Redux framework. That's fine. But I would like to "knowingly ignore" it by name (or Symbol) so that my program
+        // can throw an error on "unknown unknowns". Handling unknown unknowns is a useful practice when building robust
+        // code, especially in a dynamically typed language like JS where it's easy to have typos. Unfortunately, Redux
+        // has purposely designed the "INIT" event to not be recognizable. See the discussion in StackOverflow and follow
+        // the links from there: https://stackoverflow.com/questions/41305492/what-is-the-purpose-of-the-init-action-in-react-redux
+        //
+        // Specifically, I would like to import something like 'ActionTypes.INIT' from Redux and key off of it, and "knowingly
+        // ignore" it, so that I can have a true "catch all" where I can throw an error on unrecognized types. I'm sure
+        // to mistakenly dispatch a new action type during development and fail to handle it. I want to know about. I don't
+        // want to design my code with silent failures. The switch pattern advertised on the Redux "Getting Started" page
+        // shows a switch pattern which may yield silent failures: "https://redux.js.org/introduction/getting-started"
+        //
+        // It looks like this:
+        //
+        //     function counterReducer(state = { value: 0 }, action) {
+        //       switch (action.type) {
+        //         case 'counter/incremented':
+        //           return { value: state.value + 1 }
+        //         case 'counter/decremented':
+        //           return { value: state.value - 1 }
+        //         default:
+        //           return state
+        //       }
+        //     }
+        //
+        // A valid counterpoint to my complaint is discussed here: https://stackoverflow.com/questions/55877893/why-return-default-case-instead-of-throw-in-reduxs-reducer
+        // And I reckon that yes, if I grow the program then I would have a reason to use the "default do nothing" case
+        // in my reducers.
+        //
+        // This is the code I would like to write, but I can't, because it will trigger when the "INIT" action is dispatched:
+        // throw new Error(`Unrecognized action type '${action.type}'`)
+
+        return state
+    }
+
+    const {move} = action
+
+    state = globalThis.structuredClone(state)
+
+    delete state.legalMoves[move]
+    const point = pointsMap[move]
+
+    if (state.team === 1) {
+        state.teamXPositions = state.teamXPositions | point
+        state.team = 2
+    } else {
+        state.teamOPositions = state.teamOPositions | point
+        state.team = 1
+    }
+
+    // TODO check for a draw
+
+    return state
 }
 
-const legalMoves = globalThis.structuredClone(pointsMap)
+const store = createStore(reduce)
 
 const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
+    input: process.stdin, output: process.stdout
 })
 
 /**
  * Check the team's positions ('X's or 'O's on the board) for a win condition.
  * Did the get three in a row horizontally, vertically or diagonally?
- *
- * @param positions the current team's board positions (as a bitmap)
  */
-function checkWin(positions) {
-    if (
-        positions === (positions | 0b111000000) ||
+function checkWin(positions, team) {
+    if (positions === (positions | 0b111000000) ||
         positions === (positions | 0b000111000) ||
         positions === (positions | 0b000000111) ||
         positions === (positions | 0b100100100) ||
@@ -81,14 +145,13 @@ function checkWin(positions) {
         positions === (positions | 0b001001001) ||
         positions === (positions | 0b100010001) ||
         positions === (positions | 0b001010100)) {
-        const team = state.team === 1 ? 'X' : 'O'
         console.log(`Team '${team}' wins! 🎉`)
         rl.close()
     }
 }
 
 function nextMovePrompt() {
-    const team = state.team === 1 ? 'X' : 'O'
+    const team = store.getState().team === 1 ? 'X' : 'O'
     rl.question(`Place an '${team}' > `, acceptMove)
 }
 
@@ -102,24 +165,18 @@ function acceptMove(move) {
         return
     }
 
-    if (legalMoves[move] === undefined) {
+    if (store.getState().legalMoves[move] === undefined) {
         console.log(`The move '${move}' has already been made. Try another one.`)
         nextMovePrompt()
         return
     }
 
-    delete legalMoves[move]
+    store.dispatch({type: "move", move})
+}
 
-    let nextTeam
-    if (state.team === 1) {
-        state.teamXPositions = state.teamXPositions | point
-        nextTeam = 2
-    } else {
-        state.teamOPositions = state.teamOPositions | point
-        nextTeam = 1
-    }
+store.subscribe(function renderBoard() {
 
-    // TODO check for a draw
+    const state = store.getState()
 
     /**
      * Render a row string.
@@ -139,16 +196,13 @@ function acceptMove(move) {
    ${renderRow(state.teamXPositions >> 3, state.teamOPositions >> 3)}    
    ${renderRow(state.teamXPositions, state.teamOPositions)}    
 `
-
     console.log(boardRender)
 
-    checkWin(state.teamXPositions)
-    checkWin(state.teamOPositions)
-
-    state.team = nextTeam
+    checkWin(state.teamXPositions, 'X')
+    checkWin(state.teamOPositions, 'O')
 
     nextMovePrompt()
-}
+})
 
 nextMovePrompt()
 
