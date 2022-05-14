@@ -58,7 +58,9 @@ const starterState = {
     // The 'teamOPositions' bitmap follows the same idea, but for 'O' checks.
     //
     // Learn about bitmaps here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR
-    teamXPositions: 0b000000000, teamOPositions: 0b000000000,
+    teamXPositions: 0b000000000,
+
+    teamOPositions: 0b000000000,
 
     legalMoves: globalThis.structuredClone(pointsMap)
 }
@@ -136,13 +138,21 @@ const rl = readline.createInterface({
  */
 function checkWin(positions, team) {
     if (positions === (positions | 0b111000000) ||
+
         positions === (positions | 0b000111000) ||
+
         positions === (positions | 0b000000111) ||
+
         positions === (positions | 0b100100100) ||
+
         positions === (positions | 0b010010010) ||
+
         positions === (positions | 0b001001001) ||
+
         positions === (positions | 0b100010001) ||
+
         positions === (positions | 0b001010100)) {
+
         console.log(`Team '${team}' wins! 🎉`)
         rl.close()
     }
