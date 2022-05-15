@@ -38,4 +38,6 @@ See the README in [redux-core/](redux-core/).
 
 NOT YET IMPLEMENTED
 
+An implementation of the classic "Connect Four" game using Redux Toolkit.
+
 See the README in [redux-toolkit/](redux-toolkit/). 
