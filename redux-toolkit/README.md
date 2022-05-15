@@ -21,15 +21,31 @@ Follow these instructions to build and serve the app:
     * ```shell
       npm install
       ```
-2. Run the server:
+2. Install the Redux DevTools browser extension
+    * [Redux DevTools Chrome extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)
+4. Run the server:
     * ```shell
       npm run dev
       ```
-3. Open the browser:
+5. Open the browser:
     * <http://127.0.0.1:3000/>
+
+## Notes
+
+I installed Redux Toolkit (RTK) and related things with
+
+```shell
+npm install @reduxjs/toolkit
+npm install react-redux
+npm install --save-dev @redux-devtools/core --legacy-peer-deps
+```
+
+Note: Redux DevTools didn't express support for React 18 in its [`package.json`](https://github.com/reduxjs/redux-devtools/blob/6d2787951544eb930cbad3e61b5ee65739a17d2f/packages/redux-devtools/package.json#L80),
+so I had to force install it using the `--legacy-peer-deps` flag. Read about this type of problem from this good [StackOverflow answer](https://stackoverflow.com/a/66620869).
 
 ## Reference
 
 * [Redux Toolkit](https://github.com/reduxjs/redux-toolkit)
 * [*Redux Essentials*](https://redux.js.org/tutorials/essentials/part-1-overview-concepts)
   > This tutorial will introduce you to Redux and teach you how to use it the right way, using our latest recommended tools and best practices
+* [Wikipedia: *Connect Four*](https://en.wikipedia.org/wiki/Connect_Four)

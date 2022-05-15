@@ -1,45 +1,42 @@
-import { useState } from 'react'
-import logo from './logo.svg'
+import {useState} from 'react'
+import circle from './circle.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0)
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+    // Create the rows of visual elements that make up the Connect Four grid structure.
+    //
+    // Note: Because we're using React, the creation of React elements that contain child elements has to be done in a
+    // nested expression. Why? See the discussion in this StackOverflow question titled "How to append child to React element?"
+    // https://stackoverflow.com/questions/58200373/how-to-append-child-to-react-element
+    //
+    // And how do we write an expression that creates an array of some length? It's surprisingly obscure. See the
+    // discussion in this StackOverflow question titled "functional way to iterate over range (ES6/7)"
+    // https://stackoverflow.com/questions/30650961/functional-way-to-iterate-over-range-es6-7
+    const connectFourRows = [1, 2, 3, 4, 5, 6].map(() => {
+        return (<div>
+            {[1, 2, 3, 4, 5, 6, 7].map(() => {
+                return <img src={circle} className="connect-four-circle" alt="connect-four-space"/>
+            })
+            }</div>)
+    })
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <p>
+                    <button type="button" onClick={() => setCount((count) => count + 1)}>
+                        count is: {count}
+                    </button>
+                </p>
+                <p>
+                    Let's play Connect Four!
+                </p>
+            </header>
+            {connectFourRows}
+        </div>
+    )
 }
 
 export default App
