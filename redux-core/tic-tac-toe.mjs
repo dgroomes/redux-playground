@@ -70,7 +70,6 @@ const starterState = {
  * name it after all of these responsibilities. I'll stick with a generic name like "reducer".
  */
 function reduce(state = starterState, action) {
-    console.log("Hello from the reducer!")
     if (action.type !== "move") {
         // This is a bit awkward in my opinion. The Redux user (the programmer) will encounter an "INIT" event from the
         // Redux framework. That's fine. But I would like to "knowingly ignore" it by name (or Symbol) so that my program
@@ -108,7 +107,7 @@ function reduce(state = starterState, action) {
         return state
     }
 
-    const {move} = action
+    const move = action.payload
 
     state = globalThis.structuredClone(state)
 
@@ -179,7 +178,10 @@ function acceptMove(move) {
         return
     }
 
-    store.dispatch({type: "move", move})
+    // It's a convention in Redux to use a "payload" field to hold action data.
+    // The convention is named "Flux Standard Actions" (see https://redux.js.org/tutorials/fundamentals/part-7-standard-patterns#flux-standard-actions)
+    // This is a memorable and concise pattern. I'm happy to follow it.
+    store.dispatch({type: "move", payload: move})
 }
 
 store.subscribe(function handlePostMove() {
