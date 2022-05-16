@@ -1,9 +1,11 @@
-import {useState} from 'react'
 import circle from './circle.svg'
 import './App.css'
+import {increment} from "./counterSlice";
+import {useAppDispatch, useAppSelector} from "./hooks";
 
 function App() {
-    const [count, setCount] = useState(0)
+    const count = useAppSelector(state => state.counter.value)
+    const dispatch = useAppDispatch()
 
     // Create the rows of visual elements that make up the Connect Four grid structure.
     //
@@ -26,7 +28,7 @@ function App() {
         <div className="App">
             <header className="App-header">
                 <p>
-                    <button type="button" onClick={() => setCount((count) => count + 1)}>
+                    <button type="button" onClick={() => dispatch(increment())}>
                         count is: {count}
                     </button>
                 </p>
