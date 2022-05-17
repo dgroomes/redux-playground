@@ -2,7 +2,7 @@
 CSS "custom properties" are pretty cool: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
  */
 :root {
-  --var-connect-four-circle: 80px;
+  --var-connect-four-circle-size: 80px;
   --var-connect-four-columns: 7;
 }
 
@@ -20,7 +20,7 @@ This is the Connect Four structure: the vertically standing "game board".
   /*
   CSS `calc()` is pretty cool: https://developer.mozilla.org/en-US/docs/Web/CSS/calc
    */
-  width: calc(var(--var-connect-four-circle) * var(--var-connect-four-columns));
+  width: calc(var(--var-connect-four-circle-size) * var(--var-connect-four-columns));
   display: grid;
 }
 
