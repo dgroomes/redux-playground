@@ -6,7 +6,7 @@ CSS "custom properties" are pretty cool: https://developer.mozilla.org/en-US/doc
   --var-connect-four-columns: 7;
 }
 
-.ConnectFourStructure {
+.ConnectFourBoard {
   /*
   CSS `calc()` is pretty cool: https://developer.mozilla.org/en-US/docs/Web/CSS/calc
    */

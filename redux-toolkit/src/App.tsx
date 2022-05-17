@@ -1,7 +1,7 @@
 import './App.css'
 import {increment} from "./counterSlice";
 import {useAppDispatch, useAppSelector} from "./hooks";
-import ConnectFourStructure from "./ConnectFourStructure";
+import ConnectFourBoard from "./ConnectFourBoard";
 
 function App() {
     const count = useAppSelector(state => state.counter.value)
@@ -19,7 +19,7 @@ function App() {
                     Let's play Connect Four!
                 </p>
             </header>
-            <ConnectFourStructure/>
+            <ConnectFourBoard/>
         </div>
     )
 }

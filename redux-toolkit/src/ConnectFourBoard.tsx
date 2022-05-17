@@ -1,12 +1,12 @@
-import './ConnectFourStructure.css'
+import './ConnectFourBoard.css'
 import ConnectFourColumn from "./ConnectFourColumn";
 
 /**
- * This is the Connect Four structure: the vertically standing "game board".
+ * This is the Connect Four "game board: the vertically standing plastic structure.
  */
-export default function ConnectFourStructure() {
+export default function ConnectFourBoard() {
 
-    // Create the columns of visual elements that make up the Connect Four grid structure.
+    // Create the columns of visual elements that make up the Connect Four game board grid.
     //
     // How do we write an expression that creates an array of some length? It's surprisingly obscure. See the
     // discussion in this StackOverflow question titled "functional way to iterate over range (ES6/7)"
@@ -15,5 +15,5 @@ export default function ConnectFourStructure() {
         return <ConnectFourColumn columnIndex={columnIndex}/>
     })
 
-    return <div className="ConnectFourStructure">{connectFourColumns}</div>
+    return <div className="ConnectFourBoard">{connectFourColumns}</div>
 }
