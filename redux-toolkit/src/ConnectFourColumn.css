@@ -1,0 +1,15 @@
+/*
+The 'ConnectFourColumn' element is used as an innocuous wrapper element over the Connect Four circles. It exists
+for focusing on the column of spaces while the user is selecting their next move. By "innocuous", I mean that it should
+not interfere with the containing CSS grid. Note: I might as well have used flex box, but I want to learn grid. Plus,
+I mean a Connect Four board really is a grid, so isn't this an idiomatic use-case?
+
+This takes after the pattern described here: https://stackoverflow.com/a/53643295
+ */
+.ConnectFourColumn {
+    display: contents;
+}
+
+.ConnectFourColumn:hover .connect-four-circle {
+    filter: brightness(120%);
+}
