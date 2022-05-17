@@ -1,41 +1,8 @@
-/*
-CSS "custom properties" are pretty cool: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
- */
-:root {
-  --var-connect-four-circle-size: 80px;
-  --var-connect-four-columns: 7;
-}
-
 .App {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
-}
-
-/*
-This is the Connect Four structure: the vertically standing "game board".
- */
-.connect-four-grid {
-  /*
-  CSS `calc()` is pretty cool: https://developer.mozilla.org/en-US/docs/Web/CSS/calc
-   */
-  width: calc(var(--var-connect-four-circle-size) * var(--var-connect-four-columns));
-  display: grid;
-}
-
-/*
-The 'connect-four-column' class is used as an innocuous wrapper element over the connect four circles. It exists
-for focusing on the column of spaces while the user is selecting their next move.
-
-This takes after the pattern described here: https://stackoverflow.com/a/53643295
- */
-.connect-four-column {
-  display: contents;
-}
-
-.connect-four-column:hover .connect-four-circle  {
-  filter: brightness(120%);
 }
 
 .App-header {
