@@ -10,6 +10,6 @@ This takes after the pattern described here: https://stackoverflow.com/a/5364329
     display: contents;
 }
 
-.ConnectFourColumn:hover .connect-four-circle {
-    filter: brightness(120%);
+.ConnectFourColumn:hover .ConnectFourSpace {
+    filter: brightness(80%);
 }
