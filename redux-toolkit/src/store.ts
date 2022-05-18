@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from './counterSlice'
+import monolithicReducer from './monolithicSlice'
 
 export const store = configureStore({
     reducer: {
-        counter: counterReducer
+        monolithic: monolithicReducer
     }
 })
 

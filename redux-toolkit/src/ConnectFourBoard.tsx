@@ -12,7 +12,7 @@ export default function ConnectFourBoard() {
     // discussion in this StackOverflow question titled "functional way to iterate over range (ES6/7)"
     // https://stackoverflow.com/questions/30650961/functional-way-to-iterate-over-range-es6-7
     const connectFourColumns = [1, 2, 3, 4, 5, 6, 7].map(columnIndex => {
-        return <ConnectFourColumn columnIndex={columnIndex}/>
+        return <ConnectFourColumn key={columnIndex} columnIndex={columnIndex}/>
     })
 
     return <div className="ConnectFourBoard">{connectFourColumns}</div>

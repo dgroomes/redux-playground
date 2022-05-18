@@ -1,25 +1,25 @@
 import './App.css'
-import {increment} from "./counterSlice";
 import {useAppDispatch, useAppSelector} from "./hooks";
 import ConnectFourBoard from "./ConnectFourBoard";
+import {teamToString} from "./monolithicSlice";
 
 function App() {
-    const count = useAppSelector(state => state.counter.value)
+    const activeTeam = useAppSelector(state => state.monolithic.activeTeam)
     const dispatch = useAppDispatch()
 
     return (
         <div className="App">
             <header className="App-header">
-                <p>
-                    <button type="button" onClick={() => dispatch(increment())}>
-                        count is: {count}
-                    </button>
-                </p>
-                <p>
-                    Let's play Connect Four!
-                </p>
+                <p>Let's play Connect Four!</p>
+                <p>It's team {teamToString(activeTeam)}'s turn.</p>
             </header>
             <ConnectFourBoard/>
+            <p>
+                <button type="button">
+                    {/* Not yet implemented */}
+                    Undo
+                </button>
+            </p>
         </div>
     )
 }
