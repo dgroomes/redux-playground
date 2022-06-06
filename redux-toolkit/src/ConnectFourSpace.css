@@ -2,3 +2,11 @@
     fill: gainsboro;
     margin: 5px;
 }
+
+.yellow-token {
+    fill: yellow;
+}
+
+.red-token {
+    fill: red;
+}

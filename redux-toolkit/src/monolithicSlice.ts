@@ -13,7 +13,7 @@ export enum Team {
     YELLOW
 }
 
-export function teamToString(team: Team) : string {
+export function teamToString(team: Team): string {
     // Note: I know I could encode a string into the enum (see 'String enums': https://www.typescriptlang.org/docs/handbook/enums.html#string-enums)
     // but I dont' feel like it. I'm a bit surprised that enums can't have multiple fields (see https://stackoverflow.com/a/57462364)
     // (maybe I shouldn't be, maybe it's weird that Java has that feature) and I'm surprised how many other features there
@@ -21,17 +21,24 @@ export function teamToString(team: Team) : string {
     // features for now.
 
     if (team === Team.RED) {
-        return "Red"
+        return "🔴"
     } else {
-        return "Yellow"
+        return "🟡"
     }
 }
 
-
-interface MonolithicState {
+export interface MonolithicState {
     activeTeam: Team
     columns: Team[][]
 }
+
+/**
+ * The coordinates of a token on the game board. The origin is the bottom left.
+ *
+ * For example, for a token placed in the bottom left, it has coordinates
+ * column=1 and row=1. Notice that it is 1-indexed and not 0-indexed.
+ */
+export type Coordinates = { column: number, row: number }
 
 // Define the initial state using that type
 const initialState: MonolithicState = {
@@ -49,7 +56,7 @@ export const monolithicSlice = createSlice({
          */
         dropToken(state, action: PayloadAction<number>) {
             const column = action.payload;
-            state.columns[column].push(state.activeTeam)
+            state.columns[column - 1].push(state.activeTeam)
 
             // TODO check win condition
 

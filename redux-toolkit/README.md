@@ -1,6 +1,6 @@
 # redux-toolkit
 
-NOT YET IMPLEMENTED
+NOT YET FULLY IMPLEMENTED
 
 An implementation of the classic "Connect Four" game using Redux Toolkit.
 
