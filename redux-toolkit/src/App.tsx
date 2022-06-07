@@ -4,14 +4,15 @@ import ConnectFourBoard from "./ConnectFourBoard";
 import {teamToString} from "./monolithicSlice";
 
 function App() {
-    const activeTeam = useAppSelector(state => state.monolithic.activeTeam)
+    const activeTeam = teamToString(useAppSelector(state => state.monolithic.activeTeam))
+    const winner = useAppSelector(state => state.monolithic.winner)
     const dispatch = useAppDispatch()
 
     return (
         <div className="App">
             <header className="App-header">
                 <p>Let's play Connect Four!</p>
-                <p>It's team {teamToString(activeTeam)}'s turn.</p>
+                {winner ? <p>{activeTeam} Wins! 🎉</p> : <p>It's {activeTeam}'s turn.</p>}
             </header>
             <ConnectFourBoard/>
             <p>

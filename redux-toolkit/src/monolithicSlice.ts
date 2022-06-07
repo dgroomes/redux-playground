@@ -30,6 +30,7 @@ export function teamToString(team: Team): string {
 export interface MonolithicState {
     activeTeam: Team
     columns: Team[][]
+    winner: boolean
 }
 
 /**
@@ -43,7 +44,8 @@ export type Coordinates = { column: number, row: number }
 // Define the initial state using that type
 const initialState: MonolithicState = {
     activeTeam: Team.RED,
-    columns: [[], [], [], [], [], [], [], []]
+    columns: [[], [], [], [], [], [], [], []],
+    winner: false
 }
 
 export const monolithicSlice = createSlice({
@@ -56,9 +58,69 @@ export const monolithicSlice = createSlice({
          */
         dropToken(state, action: PayloadAction<number>) {
             const column = action.payload;
-            state.columns[column - 1].push(state.activeTeam)
+            const row = state.columns[column - 1].push(state.activeTeam)
 
             // TODO check win condition
+            // check horizontal (yes this is very verbose! This would be more naturally implemented as a recursive algorithm
+            // or just a better version of what I wrote.)
+            let connectedInARow = 1
+            let lookDistance = 1
+            let horizontalState = "looking-left"
+            while (horizontalState != "done") {
+                if (connectedInARow === 4) {
+                    state.winner = true
+                    return
+                }
+
+                if (horizontalState === "looking-left") {
+                    const col = state.columns[column - 1 - lookDistance]
+                    if (col === undefined) {
+                        horizontalState = "looking-right"
+                        lookDistance = 1
+                        continue;
+                    }
+                    const spaceState = col[row - 1]
+                    if (spaceState === undefined) {
+                        horizontalState = "looking-right"
+                        lookDistance = 1
+                        continue;
+                    }
+
+                    if (spaceState === state.activeTeam) {
+                        connectedInARow++
+                        lookDistance++
+                        continue;
+                    } else {
+                        horizontalState = "looking-right"
+                        lookDistance = 1
+                        continue;
+                    }
+                }
+
+                if (horizontalState === "looking-right") {
+                    const col = state.columns[column - 1 + lookDistance]
+                    if (col === undefined) {
+                        horizontalState = "done"
+                        continue;
+                    }
+                    const spaceState = col[row - 1]
+                    if (spaceState === undefined) {
+                        horizontalState = "done"
+                        continue;
+                    }
+
+                    if (spaceState === state.activeTeam) {
+                        connectedInARow++
+                        lookDistance++
+                    } else {
+                        horizontalState = "done"
+                    }
+                }
+            }
+
+            // check vertical
+            // check diagonal slope down
+            // check diagonal slope up
 
             // Turn over to the other team.
             if (state.activeTeam === Team.RED) {
