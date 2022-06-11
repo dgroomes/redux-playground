@@ -17,7 +17,7 @@ function App() {
             <ConnectFourBoard/>
             <p>
                 <button type="button">
-                    {/* Not yet implemented */}
+                    {/* TODO  */}
                     Undo
                 </button>
             </p>
