@@ -63,14 +63,13 @@ export const monolithicSlice = createSlice({
 
             // TODO check win condition
             if (checkForWinHorizontally(state, coordinates) ||
-                checkForWinVertically(state, coordinates)) {
+                checkForWinVertically(state, coordinates) ||
+                checkForWinSlopeUp(state, coordinates)) {
 
                 state.winner = true
                 return
             }
 
-            // check vertical
-            // check diagonal slope down
             // check diagonal slope up
 
             // Turn over to the other team.
@@ -179,6 +178,72 @@ function checkForWinVertically(state: MonolithicState, coordinates: Coordinates)
             lookDistance++
         } else {
             verticalState = "done"
+        }
+    }
+
+    return false
+}
+
+/**
+ * Check for a win condition on the diagonal axis sloping up.
+ * @param state
+ * @param coordinates
+ */
+function checkForWinSlopeUp(state: MonolithicState, coordinates: Coordinates): boolean {
+    const {column, row} = coordinates
+
+    let connectedInARow = 1
+    let lookDistance = 1
+    let lookingState = "looking-down-left"
+
+    while (lookingState != "done") {
+        if (connectedInARow === 4) {
+            return true
+        }
+
+        if (lookingState === "looking-down-left") {
+            const col = state.columns[column - 1 - lookDistance]
+            if (col === undefined) {
+                lookingState = "looking-up-right"
+                lookDistance = 1
+                continue;
+            }
+            const spaceState = col[row - 1 - lookDistance]
+            if (spaceState === undefined) {
+                lookingState = "looking-up-right"
+                lookDistance = 1
+                continue;
+            }
+
+            if (spaceState === state.activeTeam) {
+                connectedInARow++
+                lookDistance++
+                continue;
+            } else {
+                lookingState = "looking-up-right"
+                lookDistance = 1
+                continue;
+            }
+        }
+
+        if (lookingState === "looking-up-right") {
+            const col = state.columns[column - 1 + lookDistance]
+            if (col === undefined) {
+                lookingState = "done"
+                continue;
+            }
+            const spaceState = col[row - 1 + lookDistance]
+            if (spaceState === undefined) {
+                lookingState = "done"
+                continue;
+            }
+
+            if (spaceState === state.activeTeam) {
+                connectedInARow++
+                lookDistance++
+            } else {
+                lookingState = "done"
+            }
         }
     }
 
