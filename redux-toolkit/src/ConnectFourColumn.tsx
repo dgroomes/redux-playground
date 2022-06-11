@@ -1,7 +1,8 @@
 import './ConnectFourColumn.css'
 import ConnectFourSpace from "./ConnectFourSpace";
-import {useAppDispatch} from "./hooks";
+import {useAppDispatch, useAppSelector} from "./hooks";
 import {dropToken} from "./monolithicSlice"
+import {MouseEventHandler} from "react";
 
 type ConnectFourColumnParams = { columnIndex: number };
 
@@ -12,13 +13,24 @@ type ConnectFourColumnParams = { columnIndex: number };
  */
 export default function ConnectFourColumn(props: ConnectFourColumnParams) {
     const dispatch = useAppDispatch()
+    const winner = useAppSelector(state => state.monolithic.winner)
 
-    let connectFourSpaces = [1, 2, 3, 4, 5, 6].map(rowIndex => <ConnectFourSpace key={rowIndex}
-                                                                                 coordinates={{
-                                                                                     column: props.columnIndex,
-                                                                                     row: rowIndex
-                                                                                 }}/>)
+    const rowNumbers = [1, 2, 3, 4, 5, 6];
+    const connectFourSpaces = rowNumbers.map(rowIndex => <ConnectFourSpace key={rowIndex}
+                                                                           coordinates={{
+                                                                               column: props.columnIndex,
+                                                                               row: rowIndex
+                                                                           }}/>)
+
+    let onClick: MouseEventHandler | undefined
+    if (winner) {
+        onClick = undefined
+    } else {
+        onClick = function clickColumn() {
+            dispatch(dropToken(props.columnIndex))
+        }
+    }
 
     return <div className="ConnectFourColumn"
-                onClick={() => dispatch(dropToken(props.columnIndex))}>{connectFourSpaces}</div>
+                onClick={onClick}>{connectFourSpaces}</div>
 }
