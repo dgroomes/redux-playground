@@ -59,63 +59,12 @@ export const monolithicSlice = createSlice({
         dropToken(state, action: PayloadAction<number>) {
             const column = action.payload;
             const row = state.columns[column - 1].push(state.activeTeam)
+            const coordinates: Coordinates = {column, row}
 
             // TODO check win condition
-            // check horizontal (yes this is very verbose! This would be more naturally implemented as a recursive algorithm
-            // or just a better version of what I wrote.)
-            let connectedInARow = 1
-            let lookDistance = 1
-            let horizontalState = "looking-left"
-            while (horizontalState != "done") {
-                if (connectedInARow === 4) {
-                    state.winner = true
-                    return
-                }
-
-                if (horizontalState === "looking-left") {
-                    const col = state.columns[column - 1 - lookDistance]
-                    if (col === undefined) {
-                        horizontalState = "looking-right"
-                        lookDistance = 1
-                        continue;
-                    }
-                    const spaceState = col[row - 1]
-                    if (spaceState === undefined) {
-                        horizontalState = "looking-right"
-                        lookDistance = 1
-                        continue;
-                    }
-
-                    if (spaceState === state.activeTeam) {
-                        connectedInARow++
-                        lookDistance++
-                        continue;
-                    } else {
-                        horizontalState = "looking-right"
-                        lookDistance = 1
-                        continue;
-                    }
-                }
-
-                if (horizontalState === "looking-right") {
-                    const col = state.columns[column - 1 + lookDistance]
-                    if (col === undefined) {
-                        horizontalState = "done"
-                        continue;
-                    }
-                    const spaceState = col[row - 1]
-                    if (spaceState === undefined) {
-                        horizontalState = "done"
-                        continue;
-                    }
-
-                    if (spaceState === state.activeTeam) {
-                        connectedInARow++
-                        lookDistance++
-                    } else {
-                        horizontalState = "done"
-                    }
-                }
+            if (checkForWinHorizontally(state, coordinates)) {
+                state.winner = true
+                return
             }
 
             // check vertical
@@ -131,6 +80,73 @@ export const monolithicSlice = createSlice({
         }
     }
 })
+
+/**
+ * Check for a win condition on the horizontal axis.
+ *
+ * This is very verbose! This would be more naturally implemented as a recursive algorithm
+ * or just a better version of what I wrote. But I'm trying to "just do it" and (or "ship it") before cleaning it up.
+ */
+function checkForWinHorizontally(state: MonolithicState, coordinates: Coordinates): boolean {
+    const {column, row} = coordinates
+
+    let connectedInARow = 1
+    let lookDistance = 1
+    let horizontalState = "looking-left"
+
+    while (horizontalState != "done") {
+        if (connectedInARow === 4) {
+            return true
+        }
+
+        if (horizontalState === "looking-left") {
+            const col = state.columns[column - 1 - lookDistance]
+            if (col === undefined) {
+                horizontalState = "looking-right"
+                lookDistance = 1
+                continue;
+            }
+            const spaceState = col[row - 1]
+            if (spaceState === undefined) {
+                horizontalState = "looking-right"
+                lookDistance = 1
+                continue;
+            }
+
+            if (spaceState === state.activeTeam) {
+                connectedInARow++
+                lookDistance++
+                continue;
+            } else {
+                horizontalState = "looking-right"
+                lookDistance = 1
+                continue;
+            }
+        }
+
+        if (horizontalState === "looking-right") {
+            const col = state.columns[column - 1 + lookDistance]
+            if (col === undefined) {
+                horizontalState = "done"
+                continue;
+            }
+            const spaceState = col[row - 1]
+            if (spaceState === undefined) {
+                horizontalState = "done"
+                continue;
+            }
+
+            if (spaceState === state.activeTeam) {
+                connectedInARow++
+                lookDistance++
+            } else {
+                horizontalState = "done"
+            }
+        }
+    }
+
+    return false
+}
 
 export const {dropToken} = monolithicSlice.actions
 
