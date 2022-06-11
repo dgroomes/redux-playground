@@ -62,7 +62,9 @@ export const monolithicSlice = createSlice({
             const coordinates: Coordinates = {column, row}
 
             // TODO check win condition
-            if (checkForWinHorizontally(state, coordinates)) {
+            if (checkForWinHorizontally(state, coordinates) ||
+                checkForWinVertically(state, coordinates)) {
+
                 state.winner = true
                 return
             }
@@ -147,6 +149,42 @@ function checkForWinHorizontally(state: MonolithicState, coordinates: Coordinate
 
     return false
 }
+
+/**
+ * Check for a win condition on the vertical axis.
+ *
+ * Implementation note: there is no need to "look up" because there can't be tokens above the just dropped token.
+ */
+function checkForWinVertically(state: MonolithicState, coordinates: Coordinates): boolean {
+    const {column, row} = coordinates
+    const col = state.columns[column - 1]
+
+    let connectedInARow = 1
+    let lookDistance = 1
+    let verticalState = "looking-down"
+
+    while (verticalState != "done") {
+        if (connectedInARow === 4) {
+            return true
+        }
+
+        const spaceState = col[row - 1 - lookDistance]
+        if (spaceState === undefined) {
+            verticalState = "done"
+            continue;
+        }
+
+        if (spaceState === state.activeTeam) {
+            connectedInARow++
+            lookDistance++
+        } else {
+            verticalState = "done"
+        }
+    }
+
+    return false
+}
+
 
 export const {dropToken} = monolithicSlice.actions
 
