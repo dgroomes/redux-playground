@@ -13,7 +13,7 @@ type ConnectFourColumnParams = { columnIndex: number };
  */
 export default function ConnectFourColumn(props: ConnectFourColumnParams) {
     const dispatch = useAppDispatch()
-    const winner = useAppSelector(state => state.monolithic.winner)
+    const winner = useAppSelector(state => state.monolithic.present.winner)
 
     const rowNumbers = [1, 2, 3, 4, 5, 6];
     const connectFourSpaces = rowNumbers.map(rowIndex => <ConnectFourSpace key={rowIndex}

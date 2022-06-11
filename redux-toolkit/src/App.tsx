@@ -2,10 +2,11 @@ import './App.css'
 import {useAppDispatch, useAppSelector} from "./hooks";
 import ConnectFourBoard from "./ConnectFourBoard";
 import {teamToString} from "./monolithicSlice";
+import {ActionCreators} from "redux-undo";
 
 function App() {
-    const activeTeam = teamToString(useAppSelector(state => state.monolithic.activeTeam))
-    const winner = useAppSelector(state => state.monolithic.winner)
+    const activeTeam = teamToString(useAppSelector(state => state.monolithic.present.activeTeam))
+    const winner = useAppSelector(state => state.monolithic.present.winner)
     const dispatch = useAppDispatch()
 
     return (
@@ -16,8 +17,7 @@ function App() {
             </header>
             <ConnectFourBoard/>
             <p>
-                <button type="button">
-                    {/* TODO  */}
+                <button type="button" onClick={() => dispatch(ActionCreators.undo())}>
                     Undo
                 </button>
             </p>

@@ -36,8 +36,6 @@ See the README in [redux-core/](redux-core/).
 
 ## `redux-toolkit/`
 
-NOT YET IMPLEMENTED
-
-An implementation of the classic "Connect Four" game using Redux Toolkit.
+An implementation of the classic "Connect Four" game using Redux Toolkit. It features undo functionality.
 
 See the README in [redux-toolkit/](redux-toolkit/). 

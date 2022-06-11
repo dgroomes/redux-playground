@@ -6,7 +6,7 @@ import {useAppSelector} from "./hooks";
 type ConnectFourSpaceParams = { coordinates: Coordinates };
 
 export default function ConnectFourSpace(props: ConnectFourSpaceParams) {
-    const state: MonolithicState = useAppSelector(state => state.monolithic)
+    const state: MonolithicState = useAppSelector(state => state.monolithic.present)
 
     return (
         <svg className={`ConnectFourSpace ${tokenClass(state, props.coordinates)}`}

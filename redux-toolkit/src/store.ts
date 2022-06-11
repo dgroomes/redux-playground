@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import monolithicReducer from './monolithicSlice'
+import undoable from 'redux-undo'
 
 export const store = configureStore({
     reducer: {
-        monolithic: monolithicReducer
+        monolithic: undoable(monolithicReducer)
     }
 })
 

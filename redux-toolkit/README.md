@@ -1,8 +1,6 @@
 # redux-toolkit
 
-NOT YET FULLY IMPLEMENTED
-
-An implementation of the classic "Connect Four" game using Redux Toolkit.
+An implementation of the classic "Connect Four" game using Redux Toolkit. It features undo functionality.
 
 ## Description
 
@@ -49,3 +47,13 @@ so I had to force install it using the `--legacy-peer-deps` flag. Read about thi
 * [*Redux Essentials*](https://redux.js.org/tutorials/essentials/part-1-overview-concepts)
   > This tutorial will introduce you to Redux and teach you how to use it the right way, using our latest recommended tools and best practices
 * [Wikipedia: *Connect Four*](https://en.wikipedia.org/wiki/Connect_Four)
+* [Redux docs: *Implementing Undo History*](https://redux.js.org/usage/implementing-undo-history)
+  * While reading about the concept of undo and redo in Redux, I've realized that the Redux project has built an awesome
+    tutorial for "learning and doing state management in a JavaScript program. With many examples.". That's a great thing.
+    The library itself (Redux, RTK, and Sagas (which I haven't gotten into yet) are maybe secondary things to the tutorial.
+    Consider the undo/redo use-case. Undo/redo support isn't implemented in the library. You have to implement it yourself
+    or reach for another library: <https://github.com/omnidan/redux-undo>. I think I'm going to use this library, but I'm
+    curious why it is a separate project by a separate organization.
+* [GitHub repo: `msutkowski/rtk-template-base-ts`](https://github.com/msutkowski/rtk-template-base-ts/tree/master/)
+  * This is a fleshed out and runnable example of RTK with TypeScript. The author also extended it with `redux-undo` in a
+    ["CodeSandbox" project](https://codesandbox.io/s/rtk-redux-undo-example-titr4?file=/src/App.tsx:0-27).
