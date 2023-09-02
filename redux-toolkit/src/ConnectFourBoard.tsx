@@ -2,7 +2,7 @@ import './ConnectFourBoard.css'
 import ConnectFourColumn from "./ConnectFourColumn";
 
 /**
- * This is the Connect Four "game board: the vertically standing plastic structure.
+ * This is the Connect Four "game board": the vertically standing plastic structure.
  */
 export default function ConnectFourBoard() {
 

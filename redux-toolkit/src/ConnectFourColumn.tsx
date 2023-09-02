@@ -16,11 +16,12 @@ export default function ConnectFourColumn(props: ConnectFourColumnParams) {
     const winner = useAppSelector(state => state.monolithic.present.winner)
 
     const rowNumbers = [1, 2, 3, 4, 5, 6];
-    const connectFourSpaces = rowNumbers.map(rowIndex => <ConnectFourSpace key={rowIndex}
-                                                                           coordinates={{
-                                                                               column: props.columnIndex,
-                                                                               row: rowIndex
-                                                                           }}/>)
+    const connectFourSpaces = rowNumbers.map(rowIndex =>
+        <ConnectFourSpace key={rowIndex}
+                          coordinates={{
+                              column: props.columnIndex,
+                              row: rowIndex
+                          }}/>)
 
     let onClick: MouseEventHandler | undefined
     if (winner) {

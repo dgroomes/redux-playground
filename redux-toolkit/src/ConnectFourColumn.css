@@ -5,7 +5,7 @@ not interfere with the containing CSS grid. Note: I might as well have used flex
 I mean a Connect Four board really is a grid, so isn't this an idiomatic use-case?
 
 This takes after the pattern described here: https://stackoverflow.com/a/53643295
- */
+*/
 .ConnectFourColumn {
     display: contents;
 }

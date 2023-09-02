@@ -46,7 +46,7 @@ npm install --save-dev @redux-devtools/core
 
 General clean-ups, TODOs and things I wish to implement for this project:
 
-* [ ] Clean up some of the scaffolded unused stuff like the CSS. It's using some oddly long font rules which are a
+* [x] DONE Clean up some of the scaffolded unused stuff like the CSS. It's using some oddly long font rules which are a
   distraction.
 
 

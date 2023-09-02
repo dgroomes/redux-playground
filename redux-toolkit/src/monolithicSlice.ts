@@ -1,10 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
 /*
-I'm not sure I care to "slice up" my Redux stuff into more than one slice because this app is so small. So, somewhat
+I'm not sure that I care to "slice up" my Redux stuff into more than one slice because this app is so small. So, somewhat
 tongue-in-cheek, I'll name this the "monolithic slice".
 
-Am I supposed to put other functions in this file? Like for example, a "teamOrginalValueToStringValue()" (or more concisely
+Am I supposed to put other functions in this file? Like for example, a "teamOrdinalValueToStringValue()" (or more concisely
 named) function? Am I meant to jam pure domain code into a Redux construct? Vendor lock-in?
 */
 
@@ -15,7 +15,7 @@ export enum Team {
 
 export function teamToString(team: Team): string {
     // Note: I know I could encode a string into the enum (see 'String enums': https://www.typescriptlang.org/docs/handbook/enums.html#string-enums)
-    // but I dont' feel like it. I'm a bit surprised that enums can't have multiple fields (see https://stackoverflow.com/a/57462364)
+    // but I don't feel like it. I'm a bit surprised that enums can't have multiple fields (see https://stackoverflow.com/a/57462364)
     // (maybe I shouldn't be, maybe it's weird that Java has that feature) and I'm surprised how many other features there
     // are of TypeScript enums, like "computed constant members". Anyway, I'm going to stay away from TypeScript enum
     // features for now.
