@@ -5,7 +5,6 @@
 > A Predictable State Container for JS Apps
 >
 > --<cite>https://redux.js.org/</cite>
->
 
 
 ## Description
@@ -18,14 +17,14 @@ I just don't quite *get it*. As far as software goes, Redux is on the higher sid
 to start my learning journey with Redux.
 
 
-## Standalone sub-projects
+## Standalone subprojects
 
-This repository illustrates different concepts, patterns and examples via standalone sub-projects. Each sub-project is
+This repository illustrates different concepts, patterns and examples via standalone subprojects. Each sub-project is
 completely independent of the others and do not depend on the root project. This _standalone sub-project constraint_
-forces the sub-projects to be complete and maximizes the reader's chances of successfully running, understanding, and
+forces the subprojects to be complete and maximizes the reader's chances of successfully running, understanding, and
 re-using the code.
 
-The sub-projects include:
+The subprojects include:
 
 
 ## `redux-core/`
@@ -33,6 +32,7 @@ The sub-projects include:
 A tic-tac-toe command-line program implemented in Node.js and the core Redux library.
 
 See the README in [redux-core/](redux-core/). 
+
 
 ## `redux-toolkit/`
 

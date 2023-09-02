@@ -80,7 +80,7 @@ function reduce(state = starterState, action) {
         //
         // Specifically, I would like to import something like 'ActionTypes.INIT' from Redux and key off of it, and "knowingly
         // ignore" it, so that I can have a true "catch all" where I can throw an error on unrecognized types. I'm sure
-        // to mistakenly dispatch a new action type during development and fail to handle it. I want to know about. I don't
+        // I would mistakenly dispatch a new action type during development and fail to handle it. I want to know about. I don't
         // want to design my code with silent failures. The switch pattern advertised on the Redux "Getting Started" page
         // shows a switch pattern which may yield silent failures: "https://redux.js.org/introduction/getting-started"
         //

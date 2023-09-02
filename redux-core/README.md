@@ -2,27 +2,30 @@
 
 A tic-tac-toe command-line program implemented in Node.js and the core Redux library.
 
+
 ## Description
 
 After browsing the documentation, I'll stick to plain Redux and avoid Redux Toolkit (RTK) for now because I'm
 conscientious about the level of abstractness. If I jump straight into the deep end of an ultra abstract tool (like RTK)
 instead of wading in carefully (via plain Redux), then I might wind up with an exercise in frustration.
 
-I need a toy program that's concrete enough to balance out the abstractness of Redux but light weight enough that I can
+I need a toy program that's concrete enough to balance out the abstractness of Redux but lightweight enough that I can
 focus on the domain logic and Redux instead of fiddling with incidental things. So, I'll avoid a web app and I'll avoid
 TypeScript. I'll write a tic-tac-toe command-line program in JavaScript/Node.js.
 
 My tic-tac-toe program is implemented in the same spirit as the [*Redux: Fundamentals* tutorial](https://redux.js.org/tutorials/fundamentals/part-1-overview).
 That tutorial shows you how to use plain Redux (no Redux Toolkit!) to build a program. It's a great tutorial because
-it keeps incidental complexity to an absolute minimum. Instead of using a command-line project like I have here, I implements
+it keeps incidental complexity to an absolute minimum. Instead of using a command-line project like I have here, it implements
 a web page with standard HTML, CSS, and browser JavaScript APIs and includes Redux via CDN. Nice! Update: well it actually
 gets into the weeds of functional programming, so "buyer beware".
+
 
 ## Instructions
 
 Follow these instructions to run the tic-tac-toe program:
 
-1. Use Node 18 or later
+1. Pre-requisite: Node.js
+   * I used Node.js v18.17.1 which bundles npm 9.6.7
 2. Install Redux:
    * ```shell
      npm install
@@ -31,6 +34,7 @@ Follow these instructions to run the tic-tac-toe program:
    * ```shell
      node tic-tac-toe.mjs 
      ``` 
+
 
 ## Reference
 
