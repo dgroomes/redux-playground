@@ -34,8 +34,26 @@ A tic-tac-toe command-line program implemented in Node.js and the core Redux lib
 See the README in [redux-core/](redux-core/). 
 
 
+## `redux-devtools-remote/`
+
+DOES NOT WORK A demo Redux program that connects remotely to a standalone instance of Redux DevTools.
+
+See the README in [redux-devtools-remote/](redux-devtools-remote/).
+
+
 ## `redux-toolkit/`
 
 An implementation of the classic "Connect Four" game using Redux Toolkit. It features undo functionality.
 
 See the README in [redux-toolkit/](redux-toolkit/). 
+
+
+## Wish List
+
+General clean-ups, TODOs and things I wish to implement for this project:
+
+* [x] DONE Create a project showing a remote connection to Redux DevTools. This has been surprisingly challenging to implement
+  in another project I'm doing, especially because of the indirection of Redux Toolkit, the lack of documentation around
+  the architecture of Redux DevTools (and its many incarnations from browser extension to remote, etc) and the maybe
+  worst the dependency hell of ESM/CommonJS incompatibility (e.g. why do redux-devtools packages code to CommonJS but
+  require ESM-only packages like nanoid 5.x? I'm confused.)

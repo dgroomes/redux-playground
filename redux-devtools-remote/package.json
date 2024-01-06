@@ -1,0 +1,8 @@
+{
+  "name": "redux-playground_redux-devtools-remote",
+  "type": "commonjs",
+  "dependencies": {
+    "redux": "~4.2.1",
+    "@redux-devtools/remote": "~0.8.2"
+  }
+}
