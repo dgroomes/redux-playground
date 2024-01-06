@@ -4,5 +4,10 @@
   "dependencies": {
     "redux": "~4.2.1",
     "@redux-devtools/remote": "~0.8.2"
+  },
+  "overrides": {
+    "@redux-devtools/utils": {
+      "nanoid": "~3.3.7"
+    }
   }
 }

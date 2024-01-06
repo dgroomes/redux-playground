@@ -23,7 +23,7 @@ function reduce(state = initialState, action) {
 const increment = () => ({ type: 'INCREMENT' });
 const decrement = () => ({ type: 'DECREMENT' });
 
-const store = redux.createStore(reduce, devToolsEnhancer());
+const store = redux.createStore(reduce, devToolsEnhancer({ realtime: true }));
 
 store.subscribe(() => console.log(`Count: ${store.getState().count}`));
 
