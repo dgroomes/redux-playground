@@ -36,7 +36,7 @@ See the README in [redux-core/](redux-core/).
 
 ## `redux-devtools-remote/`
 
-DOES NOT WORK A demo Redux program that connects remotely to a standalone instance of Redux DevTools.
+A demo Redux program that connects remotely to a standalone instance of Redux DevTools.
 
 See the README in [redux-devtools-remote/](redux-devtools-remote/).
 

@@ -130,6 +130,11 @@ General clean-ups, TODOs and things I wish to implement for this project:
 * [x] DONE (Great, that was easy!) Should I just force downgrade dependencies until it works? For example nanoid 3.x is CommonJS and is still supported.
   What else needs to change?
     * DONE Downgrade nanoid to 3.x using the npm ["overrides" feature](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#overrides)
+* [ ] SKIP (I won't bother researching) Why does `@redux-devtools/remote` transitively depend on so much software, like React itself and Babel? All it needs
+  to do is send JSON data over a WebSocket right? It doesn't need to parse anything or render anything. I think that the
+  Redux DevTools projects could declare dependencies as "peer dependencies" for a lot of these packages.
+    * Experiment with hand-editing the `package.json` file to remove dependencies and see if it still works. Note `npm list --all`
+      shows the dependency tree.
 
 
 ## Reference
